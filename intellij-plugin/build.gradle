@@ -1,0 +1,70 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.9.10'
+    id 'org.jetbrains.intellij' version '1.17.2'
+    id 'jacoco'
+}
+
+group = 'com.enterprise.aiplugin'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+intellij {
+    version = '2024.1'
+    type = 'IC' // IntelliJ IDEA Community Edition
+    plugins = ['java', 'gradle', 'maven']
+    updateSinceUntilBuild = false
+}
+
+dependencies {
+    // Core dependencies for the plugin
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'commons-io:commons-io:2.15.1'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += [
+        '-Xlint:unchecked',
+        '-Xlint:deprecation'
+    ]
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams = true
+    }
+    reports {
+        html.required = true
+        junitXml.required = true
+    }
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}

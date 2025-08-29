@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<idea-plugin>
+    <id>com.enterprise.aiplugin</id>
+    <name>Enterprise AI Plugin</name>
+    <vendor>Enterprise AI Plugin Team</vendor>
+    <idea-version since-build="241" until-build="243.*"/>
+    <description><![CDATA[
+        Enterprise-grade AI coding assistant with advanced security, compliance, and workflow management.
+        
+        Features:
+        - Multi-provider AI integration (OpenAI, Anthropic, Gemini, Local)
+        - Advanced security with AES-256-GCM encryption
+        - Compliance modes (GDPR, SOC2, HIPAA)
+        - Sophisticated workflow orchestration
+        - Model Context Protocol (MCP) support
+        - Comprehensive audit logging
+        - File system operations with validation
+        - Context-aware AI interactions
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Application Services -->
+        <applicationService serviceImplementation="com.enterprise.aiplugin.AiPluginApplicationService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.security.SecurityService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.ai.AiProviderService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.context.ContextService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.filesystem.FileSystemService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.orchestrator.AdvancedOrchestrator"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.mcp.McpService"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.mcp.McpToolRegistry"/>
+        <applicationService serviceImplementation="com.enterprise.aiplugin.ui.StatusBarIntegration"/>
+        
+        <!-- Startup Activity -->
+        <postStartupActivity implementation="com.enterprise.aiplugin.AiPluginStartupActivity"/>
+        
+        <!-- Tool Windows -->
+        <toolWindow id="Enterprise AI Plugin" 
+                   secondary="true" 
+                   icon="AllIcons.General.Modified" 
+                   anchor="right"
+                   factoryClass="com.enterprise.aiplugin.ui.AiPluginToolWindowFactory"/>
+        
+        <!-- Status Bar Widget -->
+        <statusBarWidgetFactory implementation="com.enterprise.aiplugin.ui.AiPluginStatusBarWidgetFactory"/>
+        
+        <!-- Actions -->
+        <action id="EnterpriseAiPlugin.StartAction" 
+                class="com.enterprise.aiplugin.actions.StartAiAction" 
+                text="Start AI Assistant" 
+                description="Start the Enterprise AI Assistant">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt A"/>
+        </action>
+        
+        <action id="EnterpriseAiPlugin.ConfigureAction" 
+                class="com.enterprise.aiplugin.actions.ConfigureAiAction" 
+                text="Configure AI Settings" 
+                description="Configure AI provider and security settings">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        
+        <action id="EnterpriseAiPlugin.SecurityAuditAction" 
+                class="com.enterprise.aiplugin.actions.SecurityAuditAction" 
+                text="Security Audit" 
+                description="Run comprehensive security audit">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        
+        <!-- Project Settings -->
+        <projectConfigurable id="com.enterprise.aiplugin.settings" 
+                           displayName="Enterprise AI Plugin" 
+                           groupId="tools"
+                           class="com.enterprise.aiplugin.settings.AiPluginConfigurable"/>
+
+        <!-- Application Settings -->
+        <applicationConfigurable id="com.enterprise.aiplugin.settings" 
+                               displayName="Enterprise AI Plugin" 
+                               groupId="tools"
+                               class="com.enterprise.aiplugin.settings.AiPluginConfigurable"/>
+    </extensions>
+
+    <project-components>
+        <component>
+            <implementation-class>com.enterprise.aiplugin.project.AiPluginProjectComponent</implementation-class>
+        </component>
+    </project-components>
+
+    <application-components>
+        <component>
+            <implementation-class>com.enterprise.aiplugin.application.AiPluginApplicationComponent</implementation-class>
+        </component>
+    </application-components>
+</idea-plugin>

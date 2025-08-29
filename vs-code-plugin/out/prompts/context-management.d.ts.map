@@ -1,0 +1,1 @@
+{"version":3,"file":"context-management.d.ts","sourceRoot":"","sources":["../../src/prompts/context-management.ts"],"names":[],"mappings":"AAAA,eAAO,MAAM,aAAa,GAAI,mBAAmB,OAAO,WAiCwK,CAAC;AAEjO,eAAO,MAAM,YAAY,GAAI,SAAS,MAAM,EAAE,mBAAmB,OAAO,WA2BoD,CAAC;AAE7H,eAAO,MAAM,mBAAmB,GAAI,mBAAmB,OAAO,WAwBwD,CAAC;AAEvH,eAAO,MAAM,iBAAiB,cAYsB,CAAC"}
